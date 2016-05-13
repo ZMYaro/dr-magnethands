@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+body {
+	background-color: #89c1e2;
+	margin: 0;
+	padding: 0;
+}
+
+.appBar {
+	background-color: #5492bb;
+}
+
+button,
+*[role="button"] {
+	padding: 16px 32px;
+	min-width: 128px;
+	max-width: 100%;
+}
+
+*[role="toolbar"] button img,
+*[role="toolbar"] *[role="button"] img {
+	height: 32px;
+}
+
+header.bgFill {
+	background-image: url('/static/images/header_bg.png');
+	background-position: center;
+	background-size: cover;
+}
+
+section,
+section.card {
+	margin: 8px auto;
+	max-width: 720px;
+}
+
+.view:not(.noAppBar) {
+	padding: 16px;
+	padding-top: 88px;
+}
+@media (max-width: 600px) {
+	.view:not(.noAppBar) {
+		padding: 8px;
+		padding-top: 72px;
+	}
+}
