@@ -19,6 +19,7 @@ def create_game():
 		if Game.query(Game.id == game_id).count(limit=1) == 0:
 			new_game = Game()
 			new_game.id = game_id
+			new_game.put()
 			return new_game
 
 class GameCreate(webapp2.RequestHandler):
