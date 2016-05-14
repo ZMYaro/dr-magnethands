@@ -1,0 +1,16 @@
+<div class="view">
+	<header role="toolbar" class="appBar z2">
+		<a role="button" href="#/home" title="Cancel"><img src="/static/images/icon_close.png" alt="Cancel" /></a>
+		Waiting for players
+	</header>
+	<section class="card z1">
+		<h2 style="margin-top: 0;">Game code: {{ gameId }}</h2>
+		<p>Players: {{ playerCount }}</p>
+		<p style="text-align: center; margin-bottom: 0;">
+			<progress class="circular">...</progress>
+		</p>
+	</section>
+	<p style="text-align: center; margin: 0;">
+		<a role="button" href="#/host/{{ gameId }}/game" class="z1 centerButton">Start Game</a>
+	</p>
+</div>

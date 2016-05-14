@@ -6,9 +6,6 @@ body {
 	padding: 0;
 }
 
-.appBar {
-	background-color: #5492bb;
-}
 
 button,
 *[role="button"] {
@@ -22,6 +19,19 @@ button,
 	height: 32px;
 }
 
+.appBar {
+	background-color: #5492bb;
+	white-space: nowrap;
+}
+	.appBar button:first-child,
+	.appBar *[role="button"]:first-child {
+		margin-left: -12px;
+	}
+
+progress.circular {
+	border-top-color: #5492bb;
+}
+
 header.bgFill {
 	background-image: url('/static/images/header_bg.png');
 	background-position: center;
@@ -31,7 +41,7 @@ header.bgFill {
 section,
 section.card {
 	margin: 8px auto;
-	max-width: 720px;
+	max-width: 600px;
 }
 
 .view:not(.noAppBar) {
