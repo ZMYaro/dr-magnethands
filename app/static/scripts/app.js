@@ -1,3 +1,5 @@
+'use strict';
+
 var PARTIALS_DIR = '/static/partials/',
 	app = angular.module('drMagnethands', ['ngRoute']);
 
@@ -15,22 +17,23 @@ app.controller('HostCreateCtrl', function ($scope, $http, $location) {
 	});
 });
 app.controller('HostLobbyCtrl', function ($scope, $routeParams, $http, $location) {
-	$scope.gameId = $routeParams.gameId
-	$scope.playerCount = 0
+	$scope.gameId = $routeParams.gameId;
+	$scope.playerCount = 0;
 });
 app.controller('HostGameCtrl', function ($scope, $routeParams, $http, $location) {
-	$scope.gameId = $routeParams.gameId
-	$scope.words = []
+	$scope.gameId = $routeParams.gameId;
+	$scope.words = [];
 });
 
 // Player controllers
 app.controller('PlayerJoinCtrl', function ($scope, $http) {
-	$scope.gameId = $routeParams.gameId
-	$scope
+	
 });
-app.controller('PlayerCtrl', function ($scope, $routeParams) {
-	$scope.gameId = $routeParams.gameId
-	$scope
+app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http) {
+	$scope.gameId = $routeParams.gameId;
+});
+app.controller('PlayerGameCtrl', function ($scope, $routeParams) {
+	$scope.gameId = $routeParams.gameId;
 });
 
 app.config(['$routeProvider', function($routeProvider) {
@@ -40,7 +43,7 @@ app.config(['$routeProvider', function($routeProvider) {
 	}).when('/about', {
 		templateUrl: PARTIALS_DIR + 'about.html',
 		controller: 'MainMenuCtrl'
-	}).when('/host', { // Hosting
+	}).when('/host', { // Hosts
 		redirectTo: '/host/create'
 	}).when('/host/create', {
 		templateUrl: PARTIALS_DIR + 'host_create.html',
@@ -51,6 +54,14 @@ app.config(['$routeProvider', function($routeProvider) {
 	}).when('/host/:gameId/game', {
 		templateUrl: PARTIALS_DIR + 'host_game.html',
 		controller: 'HostGameCtrl'
+	}).when('/play', { // Players
+		redirectTo: '/play/join'
+	}).when('/play/join', {
+		templateUrl: PARTIALS_DIR + 'player_join.html',
+		controller: 'PlayerJoinCtrl'
+	}).when('/play/:gameId/lobby', {
+		templateUrl: PARTIALS_DIR + 'player_lobby.html',
+		controller: 'PlayerLobbyCtrl'
 	}).otherwise({
 		redirectTo: '/home'
 	})
