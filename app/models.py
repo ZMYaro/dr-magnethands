@@ -1,20 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
-
 from google.appengine.ext import ndb
 
 class Game(ndb.Model):
 	id = ndb.StringProperty() # Game code
-	players = ndb.StringProperty(repeated=True) # Player IDs
+	host = ndb.StringProperty() # UUID
+	players = ndb.StringProperty(repeated=True) # UUIDs
 	
-	def to_json(self):
-		json_dict = {
+	def to_dict(self):
+		return {
 			'id': self.id,
 			'players': self.players
 		}
-		return json.dumps(json_dict)
 
 class Thing(ndb.Model):
 	game = ndb.StringProperty() # Game code

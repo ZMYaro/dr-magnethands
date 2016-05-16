@@ -3,15 +3,15 @@
 		<a role="button" href="#/home" title="Cancel"><img src="/static/images/icon_back.png" alt="Cancel" /></a>
 		Join game
 	</header>
-	<form>
+	<form data-ng-submit="onSubmit()">
 		<section class="card z1">
 			<h2 style="margin-top: 0;">Enter the room code</h2>
 			<p style="text-align: center;">
-				<input type="text" name="gameId" pattern="[A-Z0-9]{4}" maxlength="4" size="5" style="font-size: 150%;" />
+				<input type="text" data-ng-model="gameId" pattern="^[A-Z0-9]{4}$" maxlength="4" size="5" style="font-size: 150%;" autofocus="autofocus" />
 			</p>
 		</section>
 		<p style="text-align: center; margin: 0;">
-			<button type="submit" class="z1">Join</a>
+			<button type="submit" class="z1">Join</button>
 		</p>
 	</form>
 </div>
