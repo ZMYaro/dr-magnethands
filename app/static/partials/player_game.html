@@ -1,0 +1,14 @@
+<div class="view">
+	<header role="toolbar" class="appBar z2">
+		<a role="button" href="#/home" title="Cancel"><img src="/static/images/icon_close.png" alt="Cancel" /></a>
+		Dr. Magnethands
+	</header>
+	<section class="card z1">
+		<p style="margin: 0;">
+			Each of these is an aspect of your character: identity, alter-ego, attribute, tool, ally, enemy, or something else.
+		</p>
+	</section>
+	<section class="card z1" data-ng-repeat="thing in things">
+		<h1>{{ thing }}</h1>
+	</section>
+</div>

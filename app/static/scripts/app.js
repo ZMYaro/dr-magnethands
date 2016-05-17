@@ -2,6 +2,11 @@
 
 var PARTIALS_DIR = '/static/partials/',
 	EVENT_MESSAGE = 'message',
+	Game = {
+		STATUS_OPEN: 0,
+		STATUS_CUT_OFF: 1,
+		STATUS_STARTED: 2
+	},
 	app = angular.module('drMagnethands', ['ngRoute'], function ($httpProvider) {
 		$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		$httpProvider.defaults.transformRequest = [function (data) {
@@ -28,12 +33,14 @@ app.factory('channel', function ($rootScope) {
 				},
 				onerror: function (err) {
 					alert('Error ' + err.code + ': ' + err.description);
-					closeChannel();
+					$rootScope.socket = undefined;
+					$rootScope.channel = undefined;
 					location.hash = '/home';
 				},
 				onclose: function () {
 					alert('The game has ended.');
-					closeChannel();
+					$rootScope.socket = undefined;
+					$rootScope.channel = undefined;
 					location.hash = '/home';
 				},
 				onmessage: function (msg) {
@@ -53,103 +60,15 @@ app.factory('channel', function ($rootScope) {
 				$rootScope.socket = undefined;
 				$rootScope.channel = undefined;
 			}
+		},
+		get isOpen() {
+			return !!$rootScope.socket;
 		}
 	};
 });
 
 app.controller('MainMenuCtrl', function ($scope, channel) {
 	channel.close();
-});
-
-// Host controllers
-app.controller('HostCreateCtrl', function ($scope, $http, channel) {
-	var reqData = {}
-	if (localStorage.userId) {
-		reqData.from = localStorage.userId
-	}
-	$http({
-		method: 'POST',
-		url: '/api/game/create',
-		data: reqData
-	}).then(function (res) {
-		// On success, get data from the server.
-		localStorage.userId = res.data.user.id;
-		localStorage.userToken = res.data.user.token;
-		
-		// Create the game channel.
-		channel.close();
-		channel.open(function () {
-			// When the socket is open, redirect to the game lobby.
-			location.hash = '/host/' + res.data.game.id + '/lobby';
-		});
-	}, function (res) {
-		// On error, go back home.
-		alert('Unable to create game.');
-		location.hash = '/home';
-	});
-});
-app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, $location, channel) {
-	// Check that the channel exists.  Create it if a token exists from
-	// which to create it.  Otherwise, redirect to the title screen.
-	if (!channel) {
-		if (localStorage.userToken) {
-			channel.close();
-			channel.open();
-		} else {
-			$location.path('/home');
-			return;
-		}
-	}
-	$scope.gameId = $routeParams.gameId;
-	$scope.playerCount = 0;
-	$scope.$on(EVENT_MESSAGE, function (ev, data) {
-		if (data.type == 'playerCount') {
-			$scope.$apply(function () {
-				$scope.playerCount = data.count;
-			});
-		}
-	});
-});
-app.controller('HostGameCtrl', function ($routeParams, $scope, $http, $location) {
-	$scope.gameId = $routeParams.gameId;
-	$scope.words = [];
-});
-
-// Player controllers
-app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
-	$scope.onSubmit = function () {
-		var reqData = {};
-		if (localStorage.userId) {
-			reqData.from = localStorage.userId
-		}
-		// Get the game ID, or return if no valid ID was specified.
-		if (/^[A-Z0-9]{4}$/.test($scope.gameId.toUpperCase())) {
-			reqData.game_id = $scope.gameId.toUpperCase();
-		} else {
-			return;
-		}
-		$http({
-			method: 'POST',
-			url: '/api/player/join',
-			data: reqData
-		}).then(function (res) {
-			// On success, get data from the server.
-			localStorage.userId = res.data.user.id;
-			localStorage.userToken = res.data.user.token;
-			
-			// Go to the game lobby.
-			$location.path('/play/' + $scope.gameId + '/lobby');
-		}, function (res) {
-			// On error, prompt the player to try again.
-			alert('Unable to join game ' + $scope.gameId + '.  Please check you have the correct game code and try again.');
-		});
-	};
-});
-app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http) {
-	$scope.gameId = $routeParams.gameId;
-});
-app.controller('PlayerGameCtrl', function ($scope, $routeParams) {
-	$scope.gameId = $routeParams.gameId;
 });
 
 app.config(['$routeProvider', function($routeProvider) {
@@ -178,6 +97,9 @@ app.config(['$routeProvider', function($routeProvider) {
 	}).when('/play/:gameId/lobby', {
 		templateUrl: PARTIALS_DIR + 'player_lobby.html',
 		controller: 'PlayerLobbyCtrl'
+	}).when('/play/:gameId/game', {
+		templateUrl: PARTIALS_DIR + 'player_game.html',
+		controller: 'PlayerGameCtrl'
 	}).otherwise({
 		redirectTo: '/home'
 	})

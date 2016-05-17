@@ -6,10 +6,20 @@
 	<form data-ng-submit="onSubmit()">
 		<section class="card z1">
 			<h2 style="margin-top: 0;">Joined game {{ gameId }}</h2>
-			<p>Before the game can start, you must write eight things.  They can be names, abilities, props, plot devices, or anything else.</p>
+			<p>
+				Before you start, write down eight things.  They can be names, abilities, props, plot devices, or anything else.
+			</p>
+			<p>
+				Just try not to make them about anyone actually in the room.
+			</p>
+			<ol class="col2">
+				<li data-ng-repeat="thing in things">
+					<input type="text" class="thingInput" data-ng-model="thing.input" data-ng-disabled="disabled" maxlength="128" required="required" placeholder="{{ thing.placeholder }}" />
+				</li>
+			</ol>
 		</section>
 		<p style="text-align: center; margin: 0;">
-			<button type="submit" class="z1">Submit</button>
+			<button type="submit" class="z1" data-ng-disabled="disabled">{{ buttonMessage || 'Submit' }}</button>
 		</p>
 	</form>
 </div>

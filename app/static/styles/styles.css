@@ -54,3 +54,37 @@ section.card {
 		padding-top: 72px;
 	}
 }
+
+.col2 {
+	margin: 0 auto;
+	padding-left: 0;
+	height: 11em;
+	overflow: hidden;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+	
+	-webkit-transition-duration: 0.25s;
+	   -moz-transition-duration: 0.25s;
+	    -ms-transition-duration: 0.25s;
+	     -o-transition-duration: 0.25s;
+	        transition-duration: 0.25s;
+}
+	.col2 li {
+		width: 45%;
+		float: left;
+		margin: 0 1% 1em 4%;
+	}
+		.col2 li input[type="text"] {
+			width: 100%;
+		}
+
+@media (max-width: 600px) {
+	.col2 {
+		height: 22em;
+	}
+		.col2 li {
+			width: 95%;
+		}
+}
+

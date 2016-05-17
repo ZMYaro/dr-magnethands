@@ -11,6 +11,6 @@
 		</p>
 	</section>
 	<p style="text-align: center; margin: 0;">
-		<a role="button" href="#/host/{{ gameId }}/game" class="z1">Start Game</a>
+		<button class="z1" data-ng-disabled="disabled" data-ng-click="startGame()">{{ buttonMessage || 'Start Game' }}</button>
 	</p>
 </div>
