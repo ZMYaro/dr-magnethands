@@ -27,7 +27,7 @@ app.controller('HostCreateCtrl', function ($scope, $http, channel) {
 		location.hash = '/home';
 	});
 });
-app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, $location, channel) {
+app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, channel) {
 	// Check that the channel exists.  Create it if a token exists from
 	// which to create it.  Otherwise, redirect to the title screen.
 	if (!channel.isOpen) {
@@ -35,7 +35,7 @@ app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, $location
 			channel.close();
 			channel.open();
 		} else {
-			$location.path('/home');
+			location.hash = '/home';
 			return;
 		}
 	}
@@ -84,7 +84,54 @@ app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, $location
 		});
 	};
 });
-app.controller('HostGameCtrl', function ($routeParams, $scope, $http, $location) {
+app.controller('HostGameCtrl', function ($routeParams, $scope, $http, channel) {
+	// Check that the channel exists.  Create it if a token exists from
+	// which to create it.  Otherwise, redirect to the title screen.
+	if (!channel.isOpen) {
+		if (localStorage.userToken) {
+			channel.close();
+			channel.open();
+		} else {
+			location.hash = '/home';
+			return;
+		}
+	}
+	$scope.disabled = true;
 	$scope.gameId = $routeParams.gameId;
-	$scope.words = [];
+	$scope.shownThings = [];
+	$scope.allThings = [];
+	
+	$scope.addThing = function () {
+		if ($scope.allThings.length > 0) {
+			$scope.shownThings.unshift($scope.allThings.pop());
+		}
+		$scope.disabled = ($scope.allThings.length === 0);
+	};
+	
+	var reqData = {
+		game_id: $scope.gameId,
+		from: localStorage.userId
+	};
+	$scope.getThings = function () {
+		$http({
+			method: 'GET',
+			url: '/api/stuff',
+			params: reqData,
+		}).then(function (res) {
+			// On success, check that the things were retrieved.
+			if (res.data.things.length === 0) {
+				// If they were not retrieved, try again.
+				$scope.getThings();
+				return;
+			}
+			// If they were, store them.
+			$scope.allThings = res.data.things;
+			$scope.addThing();
+			$scope.disabled = false;
+		}, function (res) {
+			// On error, notify the user.
+			alert('Unable to fetch the list of things.  You may need to refresh or end and restart the game.');
+		});
+	};
+	$scope.getThings();
 });

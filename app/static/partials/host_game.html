@@ -3,10 +3,21 @@
 		<a role="button" href="#/home" title="Quit"><img src="/static/images/icon_close.png" alt="Quit" /></a>
 		Dr. Magnethands
 	</header>
+	<section class="card z1">
+		<p style="margin: 0;">
+			Generally there are a few phases:
+			<ol>
+				<li>When Dr. Magnethands's henchman bursts into the hero's hideout and tells them they will never win</li>
+				<li>En route to the moon, in space.</li>
+				<li>The battle with Dr. Magnethands.</li>
+			</ol>
+			It is up to you to figure out how the things below advance the plot, challenge the players, and build the world.  Similarly, it is up to the players to figure out how to defeat the scene elements and advance.
+		</p>
+	</section>
 	<p style="text-align: center; margin: 0;">
-		<button class="z1">Get another word</button>
+		<button class="z1" data-ng-disabled="disabled" data-ng-click="addThing()">Get another thing</button>
 	</p>
-	<section class="card z1" data-ng-repeat="word in words">
-		<h1>{{ word }}</h1>
+	<section class="card z2" style="text-align: center;" data-ng-repeat="thing in shownThings track by $index">
+		<h1>{{ thing }}</h1>
 	</section>
 </div>

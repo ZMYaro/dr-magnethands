@@ -112,10 +112,10 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, channel
 		});
 	};
 });
-app.controller('PlayerGameCtrl', function ($scope, $routeParams, channel) {
+app.controller('PlayerGameCtrl', function ($routeParams, $scope, $http, channel) {
 	// Check that the channel exists.  Create it if a token exists from
 	// which to create it.  Otherwise, redirect to the title screen.
-	if (!channel) {
+	if (!channel.isOpen) {
 		if (localStorage.userToken) {
 			channel.close();
 			channel.open();
@@ -125,4 +125,30 @@ app.controller('PlayerGameCtrl', function ($scope, $routeParams, channel) {
 		}
 	}
 	$scope.gameId = $routeParams.gameId;
+	$scope.things = [];
+	
+	var reqData = {
+		game_id: $scope.gameId,
+		from: localStorage.userId
+	};
+	$scope.getThings = function () {
+		$http({
+			method: 'GET',
+			url: '/api/stuff',
+			params: reqData,
+		}).then(function (res) {
+			// On success, check that the things were retrieved.
+			if (res.data.things.length === 0) {
+				// If they were not retrieved, try again.
+				$scope.getThings();
+				return;
+			}
+			// If they were, show them.
+			$scope.things = res.data.things;
+		}, function (res) {
+			// On error, notify the user.
+			alert('Unable to fetch the list of things.  You may need to refresh or end and restart the game.');
+		});
+	};
+	$scope.getThings();
 });

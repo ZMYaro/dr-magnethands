@@ -58,6 +58,7 @@ def start_game(game):
 	for player_id in game.players:
 		for j in range(4):
 			things[i].assignee = player_id
+			things[i].put()
 			i += 1
 		channel.send_message(player_id + game.id, json.dumps({
 			'type': 'gameStart'
@@ -66,6 +67,7 @@ def start_game(game):
 	# Assign the remaining things to the host and inform the host the game has started.
 	while i < len(things):
 		things[i].assignee = game.host
+		things[i].put()
 		i += 1
 	channel.send_message(game.host + game.id, json.dumps({
 		'type': 'gameStart'
@@ -231,7 +233,7 @@ class Stuff(webapp2.RequestHandler):
 			'game': game.to_dict(),
 			'things': []
 		}
-		assigned_things = Thing.query(Thing.assignee == user_id).fetch(limit=None)
+		assigned_things = Thing.query(Thing.game == game_id, Thing.assignee == user_id).fetch(limit=None)
 		if assigned_things:
 			for thing in assigned_things:
 				res['things'].append(thing.text)
