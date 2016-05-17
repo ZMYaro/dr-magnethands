@@ -101,6 +101,6 @@ app.config(['$routeProvider', function($routeProvider) {
 		templateUrl: PARTIALS_DIR + 'player_game.html',
 		controller: 'PlayerGameCtrl'
 	}).otherwise({
-		redirectTo: '/home'
+		templateUrl: PARTIALS_DIR + 'drunk_test.html'
 	})
 }]);
