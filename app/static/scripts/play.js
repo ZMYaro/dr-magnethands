@@ -8,8 +8,8 @@ app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
 			reqData.from = localStorage.userId
 		}
 		// Get the game ID, or return if no valid ID was specified.
-		if (/^[A-Z0-9]{4}$/.test($scope.gameId.toUpperCase())) {
-			reqData.game_id = $scope.gameId.toUpperCase();
+		if (/^[a-z0-9]{4}$/.test($scope.gameId.toLowerCase())) {
+			reqData.game_id = $scope.gameId.toLowerCase();
 		} else {
 			return;
 		}

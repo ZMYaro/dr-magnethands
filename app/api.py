@@ -4,7 +4,7 @@
 import json
 import os
 from random import choice,shuffle
-from string import ascii_uppercase, digits
+from string import ascii_lowercase, digits
 from uuid import uuid4
 
 import webapp2
@@ -15,7 +15,7 @@ from models import Game,Thing
 
 
 GAME_ID_LENGTH = 4
-GAME_ID_CHARS = ascii_uppercase.replace('I', '').replace('O', '') + digits.replace('0', '')
+GAME_ID_CHARS = ascii_lowercase.replace('i', '').replace('o', '') + digits.replace('0', '')
 
 def create_game():
 	while True:
