@@ -19,6 +19,10 @@ button,
 	height: 32px;
 }
 
+.struck {
+	text-decoration: line-through;
+}
+
 .appBar {
 	background-color: #5492bb;
 	white-space: nowrap;
@@ -86,5 +90,12 @@ section.card {
 		.col2 li {
 			width: 95%;
 		}
+}
+
+.closeButtonToolbar {
+	float: right;
+	margin-top: -8px;
+	margin-right: -16px;
+	margin-left: -16px;
 }
 

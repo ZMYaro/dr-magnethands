@@ -144,7 +144,12 @@ app.controller('PlayerGameCtrl', function ($routeParams, $scope, $http, channel)
 				return;
 			}
 			// If they were, show them.
-			$scope.things = res.data.things;
+			$scope.things = res.data.things.map(function (thing) {
+				return {
+					text: thing,
+					used: false
+				};
+			});
 		}, function (res) {
 			// On error, notify the user.
 			alert('Unable to fetch the list of things.  You may need to refresh or end and restart the game.');

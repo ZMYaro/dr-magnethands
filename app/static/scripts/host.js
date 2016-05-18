@@ -125,7 +125,12 @@ app.controller('HostGameCtrl', function ($routeParams, $scope, $http, channel) {
 				return;
 			}
 			// If they were, store them.
-			$scope.allThings = res.data.things;
+			$scope.allThings = res.data.things.map(function (thing) {
+				return {
+					text: thing,
+					used: false
+				};
+			});
 			$scope.addThing();
 			$scope.disabled = false;
 		}, function (res) {

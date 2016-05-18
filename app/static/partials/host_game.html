@@ -18,6 +18,9 @@
 		<button class="z1" data-ng-disabled="disabled" data-ng-click="addThing()">Get another thing</button>
 	</p>
 	<section class="card z2" style="text-align: center;" data-ng-repeat="thing in shownThings track by $index">
-		<h1>{{ thing }}</h1>
+		<div role="toolbar" class="closeButtonToolbar">
+			<button data-ng-click="thing.used = true" data-ng-disabled="thing.used" style="width: 60px; height: 56px;">&times;</button>
+		</div>
+		<h1 data-ng-class="{struck: thing.used}">{{ thing.text }}</h1>
 	</section>
 </div>
