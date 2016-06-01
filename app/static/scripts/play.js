@@ -46,28 +46,28 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, channel
 	$scope.disabled = false;
 	$scope.things = [
 		{
-			placeholder: 'Type a thing',
+			placeholder: 'Identity (e.g., Capt. Happenstance)',
 			input: ''
 		}, {
-			placeholder: 'And another thing',
+			placeholder: 'Special ability (e.g., door-fu)',
 			input: ''
 		}, {
-			placeholder: 'And another',
+			placeholder: 'Prop (e.g., teeth of three deer)',
 			input: ''
 		}, {
-			placeholder: 'Halfway there',
+			placeholder: 'Plot device (e.g., potato ex machina)',
 			input: ''
 		}, {
-			placeholder: 'Another',
+			placeholder: 'Get it?  Do the rest yourself.',
 			input: ''
 		}, {
-			placeholder: 'Nearly done',
+			placeholder: 'Nearly done.',
 			input: ''
 		}, {
-			placeholder: 'One more',
+			placeholder: 'One more.',
 			input: ''
 		}, {
-			placeholder: 'Last one',
+			placeholder: 'Last one!',
 			input: ''
 		}
 	];
