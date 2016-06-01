@@ -52,19 +52,19 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, channel
 			placeholder: 'Special ability (e.g., door-fu)',
 			input: ''
 		}, {
+			placeholder: 'Plot device (e.g., potato ex machina)',
+			input: ''
+		}, {
 			placeholder: 'Prop (e.g., teeth of three deer)',
 			input: ''
 		}, {
-			placeholder: 'Plot device (e.g., potato ex machina)',
+			placeholder: 'Attribute (e.g., made of bread)',
 			input: ''
 		}, {
 			placeholder: 'Get it?  Do the rest yourself.',
 			input: ''
 		}, {
-			placeholder: 'Nearly done.',
-			input: ''
-		}, {
-			placeholder: 'One more.',
+			placeholder: 'Nearly there...',
 			input: ''
 		}, {
 			placeholder: 'Last one!',
