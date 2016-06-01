@@ -7,11 +7,11 @@
 		<section class="card z1">
 			<h2 style="margin-top: 0;">Enter the room code</h2>
 			<p style="text-align: center;">
-				<input type="text" data-ng-model="gameId" maxlength="4" size="5" required="required" pattern="^[a-z0-9]{4}$" style="font-size: 150%;" autofocus="autofocus" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+				<input type="text" data-ng-model="gameId" data-ng-disabled="disabled" maxlength="4" size="5" required="required" pattern="^[a-z0-9]{4}$" style="font-size: 150%;" autofocus="autofocus" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
 			</p>
 		</section>
 		<p style="text-align: center; margin: 0;">
-			<button type="submit" class="z1">Join</button>
+			<button type="submit" class="z1" data-ng-disabled="disabled">{{ buttonMessage || 'Join' }}</button>
 		</p>
 	</form>
 </div>

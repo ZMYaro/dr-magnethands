@@ -2,6 +2,8 @@
 
 // Player controllers
 app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
+	$scope.disabled = false;
+	$scope.buttonMessage = 'Join';
 	$scope.onSubmit = function () {
 		var reqData = {};
 		if (localStorage.userId) {
@@ -13,6 +15,11 @@ app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
 		} else {
 			return;
 		}
+		
+		// Disable the form until the request goes through.
+		$scope.disabled = true;
+		$scope.buttonMessage = 'Joining';
+		
 		$http({
 			method: 'POST',
 			url: '/api/player/join',
@@ -27,6 +34,8 @@ app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
 		}, function (res) {
 			// On error, prompt the player to try again.
 			alert('Unable to join game ' + $scope.gameId + '.  Please check you have the correct game code and try again.');
+			$scope.disabled = false;
+			$scope.buttonMessage = 'Join';
 		});
 	};
 });
