@@ -28,10 +28,13 @@ def create_game():
 			new_game.put()
 			return new_game
 
-def create_user(game_id):
+def create_player_id(game_id):
 	while True:
+		# Generate a UUID.
 		user_id = uuid4().hex
-		if Game.query(Game.id == game_id, Game.players != user_id).count(limit=1) == 0:
+		# Check for that UUID in the game already.
+		if Game.query(Game.id == game_id, Game.players == user_id).count(limit=1) == 0:
+			# If it is not in the game, return it.
 			return user_id
 
 def game_ready(game):
@@ -81,7 +84,7 @@ class GameCreate(webapp2.RequestHandler):
 		# Get the user's ID or create a new one.
 		user_id = self.request.get('from')
 		if not user_id:
-			user_id = create_user(game.id)
+			user_id = create_player_id(game.id)
 		
 		# Set the user as the new game's host.
 		game.host = user_id
@@ -170,7 +173,7 @@ class PlayerJoin(webapp2.RequestHandler):
 		
 		# Get the user's ID, or create a new one.
 		if not user_id:
-			user_id = create_user(game.id)
+			user_id = create_player_id(game.id)
 		# If not already in, add it to the players list.
 		if user_id not in game.players:
 			game.players.append(user_id)
