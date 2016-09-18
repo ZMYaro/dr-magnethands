@@ -3,6 +3,25 @@
 	<head>
 		<title>Dr. Magnethands</title>
 		
+		<!-- Force HTTPS and register service worker. -->
+		<link rel="canonical" href="https://magnethands.zmyaro.com" />
+		<script type="text/javascript">
+			var CANONICAL_HOST = "magnethands.zmyaro.com";
+			if (window.location.host === CANONICAL_HOST && window.location.protocol !== 'https:') {
+				window.location.protocol = 'https';
+			}
+			
+			if (!!navigator.serviceWorker && !!window.Cache && !!Cache.prototype.addAll) {
+				navigator.serviceWorker.register('/serviceworker.js').then(function () {
+					console.log('Service worker registered.');
+				}).catch(function () {
+					console.log('Service worker failed to register.');
+				});
+			} else {
+				console.log('Service worker caching not supported.');
+			}
+		</script>
+		
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -27,18 +46,6 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
-		
-		<script type="text/javascript">
-			if (!!navigator.serviceWorker && !!window.Cache && !!Cache.prototype.addAll) {
-				navigator.serviceWorker.register('/serviceworker.js').then(function () {
-					console.log('Service worker registered.');
-				}).catch(function () {
-					console.log('Service worker failed to register.');
-				});
-			} else {
-				console.log('Service worker caching not supported.');
-			}
-		</script>
 		<script type="text/javascript" src="/static/scripts/app.js"></script>
 		<script type="text/javascript" src="/static/scripts/host.js"></script>
 		<script type="text/javascript" src="/static/scripts/play.js"></script>
