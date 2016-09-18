@@ -23,12 +23,22 @@
 		<link rel="stylesheet" type="text/css" href="/static/styles/styles.css" />
 		
 		<script type="text/javascript" src="/static/scripts/libs/material-touch.js"></script>
+		<script type="text/javascript">
+			window.onload = function () {
+				document.getElementById('reloadButton').onclick = function () {
+					this.innerHTML = 'Reconnecting...';
+					this.disabled = true;
+					location.reload();
+				};
+			};
+		</script>
 	</head>
 	<body>
 		<div class="view">
 			<header role="toolbar" class="appBar z2">
 				You are offline
 			</header>
+			<img src="/static/images/offline.png" alt="" style="width: 100%; margin: -16px; position: relative; z-index: -1;" />
 			<section class="card z1"><!-- class="card z1">-->
 				<h2 style="margin-top: 0;">Oh no!</h2>
 				<p>
@@ -36,7 +46,7 @@
 				</p>
 			</section>
 			<p style="text-align: center;">
-				<button class="z1" onclick="location.reload();">Try again</button>
+				<button class="z1" id="reloadButton">Try again</button>
 			</p>
 		</div>
 	</body>

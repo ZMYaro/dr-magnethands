@@ -1,13 +1,24 @@
 'use strict';
 
-const CACHE_VERSION = '2016-09-17, v1';
+const CACHE_VERSION = '2016-09-17, v3';
 
 this.addEventListener('install', function (event) {
 	event.waitUntil(
 		caches.open(CACHE_VERSION).then(function (cache) {
+			cache.addAll([
+				'/static/images/header_bg.png',
+				'/static/images/icon_back.png',
+				'/static/images/icon_close.png',
+				'/static/images/header_bg.png',
+				'/static/images/silhouette.png',
+				'/static/images/title.png'
+			]);
+			
 			return cache.addAll([
 				'/static/offline.html',
+				'/static/images/favicon.ico',
 				'/static/images/icon.png',
+				'/static/images/offline.png',
 				'/static/scripts/libs/material-touch.js',
 				'/static/styles/libs/material-elements.css',
 				'/static/styles/libs/material-depth.css',
