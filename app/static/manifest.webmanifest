@@ -1,0 +1,20 @@
+{
+	"name": "Dr. Magnethands",
+	"short_name": "Dr. Magnethands",
+	"description": "An RPG for three or more drunk people",
+	
+	"start_url": "/",
+	"display": "standalone",
+	"orientation": "landscape",
+	
+	"theme_color": "#5492bb",
+	"background_color": "#89c1e2",
+	
+	"icons": [
+		{
+			"src": "/static/images/icon.png",
+			"sizes": "168x168",
+			"type": "image/png"
+		}
+	]
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = '2016-09-17, v3';
+const CACHE_VERSION = '2016-09-19, v1';
 
 this.addEventListener('install', function (event) {
 	event.waitUntil(
@@ -15,6 +15,7 @@ this.addEventListener('install', function (event) {
 			]);
 			
 			return cache.addAll([
+				'/static/manifest.webmanifest',
 				'/static/offline.html',
 				'/static/images/favicon.ico',
 				'/static/images/icon.png',
