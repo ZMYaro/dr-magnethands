@@ -48,17 +48,17 @@ progress.circular {
 	padding: 16px;
 	margin-bottom: -32px;
 }
-@media (max-height: 700px) {
+@media (max-height: 600px) {
 	.bgFill {
 		margin-bottom: -64px;
 	}
 }
-@media (max-height: 660px) {
+@media (max-height: 520px) {
 	.bgFill {
 		margin-bottom: -128px;
 	}
 }
-@media (max-height: 560px) {
+@media (max-height: 480px) {
 	.silhouette {
 		display: none;
 	}
