@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = '2016-09-20, v2';
+const CACHE_VERSION = '2016-10-22, v1';
 
 this.addEventListener('install', function (event) {
 	event.waitUntil(

@@ -14,11 +14,6 @@ button,
 	max-width: 100%;
 }
 
-*[role="toolbar"] button img,
-*[role="toolbar"] *[role="button"] img {
-	height: 32px;
-}
-
 .struck {
 	text-decoration: line-through;
 }
@@ -29,7 +24,7 @@ button,
 }
 	.appBar button:first-child,
 	.appBar *[role="button"]:first-child {
-		margin-left: -12px;
+		margin-left: -8px;
 	}
 
 progress.circular {
