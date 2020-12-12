@@ -1,0 +1,23 @@
+{
+	"name": "dr-magnethands",
+	"version": "1.0.0",
+	"description": "An RPG for three or more drunk people",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/zmyaro/dr-magnethands.git"
+	},
+	"author": "Zachary Yaro",
+	"bugs": {
+		"url": "https://github.com/zmyaro/dr-magnethands/issues"
+	},
+	"homepage": "https://github.com/zmyaro/dr-magnethands#readme",
+	"dependencies": {
+		"express": "^4.17.1",
+		"mongoose": "^5.11.5",
+		"uuid": "^8.3.2"
+	}
+}

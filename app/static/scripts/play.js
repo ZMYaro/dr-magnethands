@@ -88,7 +88,7 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, channel
 		for (var i = 0; i < $scope.things.length; i++) {
 			// If any input was not filled in, do not submit.
 			if ($scope.things[i].input) {
-				reqData['thing' + (i + 1)] = $scope.things[i].input;
+				reqData['thing' + i] = $scope.things[i].input;
 			} else {
 				return;
 			}
