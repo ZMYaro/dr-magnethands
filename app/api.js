@@ -104,6 +104,7 @@ async function isGameReady(game) {
 
 /**
  * Assign things to players
+ * @param {Game} game - The game to start
  */
 async function startGame(game) {
 	// Get the things submitted for the game.
@@ -175,24 +176,27 @@ router.route('/game/create')
 
 router.route('/game/start')
 	.post(async function (req, res) {
-		// Get the code of the game to be joined.
 		var gameId = req.body['game_id'],
 			userId = req.body['from'];
+		// Confirm the required fields were passed.
 		if (!gameId) {
 			// 404 if no game was specified.
-			// TODO: Handle error.
+			handleError(res, 'No game code was specified.', 404);
+			return;
+		}
+		if (!userId) {
+			handleError(res, 'No user ID was specified.', 403);
 			return;
 		}
 		
-		// Get the game to be joined.
+		// Confirm the game exists.
 		var game = await Game.findOne({ code: gameId });
 		if (!game) {
-			// 404 if the game was not found.
-			// TODO: Handle error.
+			handleError(res, 'The requested game was not found.', 404);
 			return;
 		} else if (game.host !== userId) {
-			// 403 if the user is not the host.
-			// TODO: Handle error.
+			// Confirm the user is the host of the game.
+			handleError(res, 'The specified user is not the host of the requested game.', 403);
 			return;
 		}
 		
@@ -214,10 +218,8 @@ router.route('/game/start')
 
 router.route('/player/join')
 	.post(async function (req, res) {
-		// Get the ID of the game to be joined.
 		var gameId = req.body['game_id'],
 			userId = req.body['from'];
-		
 		// Confirm the required field were passed.
 		if (!gameId) {
 			handleError(res, 'No game code was specified.', 404);
@@ -227,7 +229,7 @@ router.route('/player/join')
 		// Confirm the game exists.
 		var game = await Game.findOne({ code: gameId });
 		if (!game) {
-			handleError(res, 'The requested game was not found.', 403);
+			handleError(res, 'The requested game was not found.', 404);
 			return;
 		}
 		// Confirm the game is open if the player is not already in.
@@ -264,9 +266,8 @@ router.route('/player/leave')
 	.post(async function (req, res) {
 		var gameId = req.body['game_id'],
 			userId = req.body['from'];
-		
 		if (!userId) {
-			handleError(res, 'No player ID was specified.', 404);
+			handleError(res, 'No player ID was specified.', 403);
 			return;
 		}
 		
@@ -310,7 +311,7 @@ router.route('/things')
 			return;
 		}
 		if (!userId) {
-			handleError(res, 'No user ID was specified.', 404);
+			handleError(res, 'No user ID was specified.', 403);
 			return;
 		}
 		// Confirm the game exists.
@@ -346,7 +347,7 @@ router.route('/things')
 			return;
 		}
 		if (!userId) {
-			handleError(res, 'No user ID was specified.', 404);
+			handleError(res, 'No user ID was specified.', 403);
 			return;
 		}
 		// Confirm the game exists.
