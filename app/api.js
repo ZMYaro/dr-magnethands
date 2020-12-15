@@ -188,10 +188,10 @@ router.route('/game/create')
 router.route('/game/start')
 	/** Handle a host request to cut off joining, and start the game if all players are ready. */
 	.post(async function (req, res) {
-		var gameId = req.body['game_id'],
+		var gameCode = req.body['game_code'],
 			userId = req.body['from'];
 		// Confirm the required fields were passed.
-		if (!gameId) {
+		if (!gameCode) {
 			// 404 if no game was specified.
 			handleError(res, 'No game code was specified.', 404);
 			return;
@@ -202,7 +202,7 @@ router.route('/game/start')
 		}
 		
 		// Confirm the game exists.
-		var game = await Game.findOne({ code: gameId });
+		var game = await Game.findOne({ code: gameCode });
 		if (!game) {
 			handleError(res, 'The requested game was not found.', 404);
 			return;
@@ -232,16 +232,16 @@ router.route('/game/start')
 router.route('/player/join')
 	/** Handle a client request for a player to join a game. */
 	.post(async function (req, res) {
-		var gameId = req.body['game_id'],
+		var gameCode = req.body['game_code'],
 			userId = req.body['from'];
 		// Confirm the required field were passed.
-		if (!gameId) {
+		if (!gameCode) {
 			handleError(res, 'No game code was specified.', 404);
 			return;
 		}
 		
 		// Confirm the game exists.
-		var game = await Game.findOne({ code: gameId });
+		var game = await Game.findOne({ code: gameCode });
 		if (!game) {
 			handleError(res, 'The requested game was not found.', 404);
 			return;
@@ -281,7 +281,7 @@ router.route('/player/join')
 router.route('/player/leave')
 	/** Handle a client request for a player to leave a game. */
 	.post(async function (req, res) {
-		var gameId = req.body['game_id'],
+		var gameCode = req.body['game_code'],
 			userId = req.body['from'];
 		if (!userId) {
 			handleError(res, 'No player ID was specified.', 403);
@@ -289,8 +289,8 @@ router.route('/player/leave')
 		}
 		
 		// Get game(s) where the user was a player or host.
-		var playerGames = await Game.find({ code: gameId, players: userId }),
-			hostGames = await Game.find({ code: gameId, host: userId });
+		var playerGames = await Game.find({ code: gameCode, players: userId }),
+			hostGames = await Game.find({ code: gameCode, host: userId });
 		
 		for (let game of playerGames) {
 			// Remove the user from the games player list.
@@ -298,7 +298,7 @@ router.route('/player/leave')
 			await game.save();
 			
 			// Remove the player's things.
-			await Thing.deleteMany({ game: gameId, creator: userId });
+			await Thing.deleteMany({ game: gameCode, creator: userId });
 			
 			// Tell the host a player was removed.
 			res.app.io.to(game.host + game.code).emit('message', {
@@ -315,7 +315,7 @@ router.route('/player/leave')
 			}
 			
 			// Delete the game's things.
-			await Thing.deleteMany({ game: gameId });
+			await Thing.deleteMany({ game: gameCode });
 			// Delete the game.
 			await game.deleteOne();
 		}
@@ -326,10 +326,10 @@ router.route('/player/leave')
 router.route('/things')
 	/** Handle a client sending a player's things for a game. */
 	.get(async function (req, res) {
-		var gameId = req.query['game_id'],
+		var gameCode = req.query['game_code'],
 			userId = req.query['from'];
 		// Confirm the required fields were passed.
-		if (!gameId) {
+		if (!gameCode) {
 			handleError(res, 'No game code was specified.', 404);
 			return;
 		}
@@ -338,7 +338,7 @@ router.route('/things')
 			return;
 		}
 		// Confirm the game exists.
-		var game = await Game.findOne({ code: gameId });
+		var game = await Game.findOne({ code: gameCode });
 		if (!game) {
 			handleError(res, 'The requested game was not found.', 404);
 			return;
@@ -355,7 +355,7 @@ router.route('/things')
 		}
 		
 		// Send the user xer things.
-		var things = await Thing.find({ game: gameId, assignee: userId });
+		var things = await Thing.find({ game: gameCode, assignee: userId });
 		res.json({
 			game: game,
 			things: things.map((thing) => thing.text)
@@ -363,10 +363,10 @@ router.route('/things')
 	})
 	/** Handle a client requesting a player's things for a game. */
 	.post(async function (req, res) {
-		var gameId = req.body['game_id'],
+		var gameCode = req.body['game_code'],
 			userId = req.body['from'];
 		// Confirm the required fields were passed.
-		if (!gameId) {
+		if (!gameCode) {
 			handleError(res, 'No game code was specified.', 404);
 			return;
 		}
@@ -375,7 +375,7 @@ router.route('/things')
 			return;
 		}
 		// Confirm the game exists.
-		var game = await Game.findOne({ code: gameId });
+		var game = await Game.findOne({ code: gameCode });
 		if (!game) {
 			handleError(res, 'The requested game was not found.', 404);
 			return;
@@ -395,7 +395,7 @@ router.route('/things')
 			}
 			
 			let thing = new Thing({
-				game: gameId,
+				game: gameCode,
 				creator: userId,
 				text: thingText
 			});

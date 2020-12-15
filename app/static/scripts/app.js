@@ -80,10 +80,10 @@ app.config(['$routeProvider', function($routeProvider) {
 	}).when('/host/create', {
 		templateUrl: PARTIALS_DIR + 'host_create.html',
 		controller: 'HostCreateCtrl'
-	}).when('/host/:gameId/lobby', {
+	}).when('/host/:gameCode/lobby', {
 		templateUrl: PARTIALS_DIR + 'host_lobby.html',
 		controller: 'HostLobbyCtrl'
-	}).when('/host/:gameId/game', {
+	}).when('/host/:gameCode/game', {
 		templateUrl: PARTIALS_DIR + 'host_game.html',
 		controller: 'HostGameCtrl'
 	}).when('/play', { // Players
@@ -91,10 +91,10 @@ app.config(['$routeProvider', function($routeProvider) {
 	}).when('/play/join', {
 		templateUrl: PARTIALS_DIR + 'player_join.html',
 		controller: 'PlayerJoinCtrl'
-	}).when('/play/:gameId/lobby', {
+	}).when('/play/:gameCode/lobby', {
 		templateUrl: PARTIALS_DIR + 'player_lobby.html',
 		controller: 'PlayerLobbyCtrl'
-	}).when('/play/:gameId/game', {
+	}).when('/play/:gameCode/game', {
 		templateUrl: PARTIALS_DIR + 'player_game.html',
 		controller: 'PlayerGameCtrl'
 	}).otherwise({

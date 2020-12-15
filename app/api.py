@@ -19,21 +19,21 @@ GAME_ID_CHARS = ascii_lowercase.replace('i', '').replace('o', '') + digits.repla
 
 def create_game():
 	while True:
-		game_id = ''.join(choice(GAME_ID_CHARS) for i in range(GAME_ID_LENGTH))
-		if Game.query(Game.id == game_id).count(limit=1) == 0:
+		game_code = ''.join(choice(GAME_ID_CHARS) for i in range(GAME_ID_LENGTH))
+		if Game.query(Game.id == game_code).count(limit=1) == 0:
 			new_game = Game()
-			new_game.id = game_id
+			new_game.id = game_code
 			new_game.players = []
 			new_game.status = Game.STATUS_OPEN
 			new_game.put()
 			return new_game
 
-def create_player_id(game_id):
+def create_player_id(game_code):
 	while True:
 		# Generate a UUID.
 		user_id = uuid4().hex
 		# Check for that UUID in the game already.
-		if Game.query(Game.id == game_id, Game.players == user_id).count(limit=1) == 0:
+		if Game.query(Game.id == game_code, Game.players == user_id).count(limit=1) == 0:
 			# If it is not in the game, return it.
 			return user_id
 
@@ -106,9 +106,9 @@ class GameStart(webapp2.RequestHandler):
 		self.response.headers['Content-Type'] = 'application/json'
 		
 		# Get the ID of the game to be joined, or 404 if none was specified.
-		game_id = self.request.get('game_id')
+		game_code = self.request.get('game_code')
 		user_id = self.request.get('from')
-		if not game_id:
+		if not game_code:
 			self.response.write(json.dumps({
 				'error': 'No game code was specified.'
 			}))
@@ -116,7 +116,7 @@ class GameStart(webapp2.RequestHandler):
 			return
 		
 		# Get the game to be joined, or 404 if it was not found.
-		game = Game.query(Game.id == game_id).get()
+		game = Game.query(Game.id == game_code).get()
 		if not game:
 			self.response.write(json.dumps({
 				'error': 'The requested game was not found.'
@@ -147,9 +147,9 @@ class PlayerJoin(webapp2.RequestHandler):
 		self.response.headers['Content-Type'] = 'application/json'
 		
 		# Get the ID of the game to be joined, or 404 if none was specified.
-		game_id = self.request.get('game_id')
+		game_code = self.request.get('game_code')
 		user_id = self.request.get('from')
-		if not game_id:
+		if not game_code:
 			self.response.write(json.dumps({
 				'error': 'No game code was specified.'
 			}))
@@ -157,7 +157,7 @@ class PlayerJoin(webapp2.RequestHandler):
 			return
 		
 		# Get the game to be joined, or 404 if it was not found.
-		game = Game.query(Game.id == game_id).get()
+		game = Game.query(Game.id == game_code).get()
 		if not game:
 			self.response.write(json.dumps({
 				'error': 'The requested game was not found.'
@@ -201,9 +201,9 @@ class Stuff(webapp2.RequestHandler):
 		self.response.headers['Content-Type'] = 'application/json'
 		
 		# Get the ID of the game and player, or 404 if none was specified.
-		game_id = self.request.get('game_id')
+		game_code = self.request.get('game_code')
 		user_id = self.request.get('from')
-		if not game_id:
+		if not game_code:
 			self.response.write(json.dumps({
 				'error': 'No game code was specified.'
 			}))
@@ -217,7 +217,7 @@ class Stuff(webapp2.RequestHandler):
 			return
 		
 		# Get the game, or 404 if it was not found.
-		game = Game.query(Game.id == game_id).get()
+		game = Game.query(Game.id == game_code).get()
 		if not game:
 			self.response.write(json.dumps({
 				'error': 'The requested game was not found.'
@@ -236,13 +236,13 @@ class Stuff(webapp2.RequestHandler):
 			'game': game.to_dict(),
 			'things': []
 		}
-		assigned_things = Thing.query(Thing.game == game_id, Thing.assignee == user_id).fetch(limit=None)
+		assigned_things = Thing.query(Thing.game == game_code, Thing.assignee == user_id).fetch(limit=None)
 		if assigned_things:
 			for thing in assigned_things:
 				res['things'].append(thing.text)
 		else:
 			thing_count = None if user_id == Game.host else 4
-			things = Thing.query(Thing.game == game_id, Thing.assignee == '').fetch(limit=thing_count)
+			things = Thing.query(Thing.game == game_code, Thing.assignee == '').fetch(limit=thing_count)
 			shuffle(things)
 			for thing in things:
 				res['things'].append(thing.text)
@@ -255,9 +255,9 @@ class Stuff(webapp2.RequestHandler):
 		self.response.headers['Content-Type'] = 'application/json'
 		
 		# Get the ID of the game and player, or 404 if none was specified.
-		game_id = self.request.get('game_id')
+		game_code = self.request.get('game_code')
 		user_id = self.request.get('from')
-		if not game_id:
+		if not game_code:
 			self.response.write(json.dumps({
 				'error': 'No game code was specified.'
 			}))
@@ -271,7 +271,7 @@ class Stuff(webapp2.RequestHandler):
 			return
 		
 		# Get the game, or 404 if it was not found.
-		game = Game.query(Game.id == game_id).get()
+		game = Game.query(Game.id == game_code).get()
 		if not game:
 			self.response.write(json.dumps({
 				'error': 'The requested game was not found.'
@@ -289,7 +289,7 @@ class Stuff(webapp2.RequestHandler):
 		for i in range(8):
 			thing_text = self.request.get('thing' + `(i + 1)`)
 			thing = Thing()
-			thing.game = game_id
+			thing.game = game_code
 			thing.player = user_id
 			thing.text = thing_text
 			thing.put()
@@ -309,10 +309,10 @@ class PlayerLeave(webapp2.RequestHandler):
 		user_id = self.request.get('from')
 		
 		if user_id:
-			game_id = user_id[-4:]
+			game_code = user_id[-4:]
 			user_id = user_id[:-4]
-			player_games = Game.query(Game.id == game_id, Game.players == user_id).fetch(limit=None)
-			host_games = Game.query(Game.id == game_id, Game.host == user_id).fetch(limit=None)
+			player_games = Game.query(Game.id == game_code, Game.players == user_id).fetch(limit=None)
+			host_games = Game.query(Game.id == game_code, Game.host == user_id).fetch(limit=None)
 			
 			for game in player_games:
 				# Remove the player from the list.

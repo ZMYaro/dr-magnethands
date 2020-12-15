@@ -10,8 +10,8 @@ app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
 			reqData.from = localStorage.userId
 		}
 		// Get the game ID, or return if no valid ID was specified.
-		if (/^[a-z0-9]{4}$/.test($scope.gameId.toLowerCase())) {
-			reqData.game_id = $scope.gameId.toLowerCase();
+		if (/^[a-z0-9]{4}$/.test($scope.gameCode.toLowerCase())) {
+			reqData.game_code = $scope.gameCode.toLowerCase();
 		} else {
 			return;
 		}
@@ -30,10 +30,10 @@ app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
 			localStorage.userToken = res.data.user.token;
 			
 			// Go to the game lobby.
-			$location.path('/play/' + $scope.gameId + '/lobby');
+			$location.path('/play/' + $scope.gameCode + '/lobby');
 		}, function (res) {
 			// On error, prompt the player to try again.
-			alert('Unable to join game ' + $scope.gameId + '.  Please check you have the correct game code and try again.');
+			alert('Unable to join game ' + $scope.gameCode + '.  Please check you have the correct game code and try again.');
 			$scope.disabled = false;
 			$scope.buttonMessage = 'Join';
 		});
@@ -50,7 +50,7 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, socket)
 			return;
 		}
 	}
-	$scope.gameId = $routeParams.gameId;
+	$scope.gameCode = $routeParams.gameCode;
 	$scope.disabled = false;
 	$scope.things = [
 		{
@@ -81,7 +81,7 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, socket)
 	];
 	$scope.onSubmit = function () {
 		var reqData = {
-			game_id: $scope.gameId,
+			game_code: $scope.gameCode,
 			from: localStorage.userId
 		};
 		for (var i = 0; i < $scope.things.length; i++) {
@@ -104,11 +104,11 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, socket)
 			// On success, start waiting, and then go to the game itself.
 			$scope.buttonMessage = 'Waiting for other players';
 			if (res.data.game.status === Game.STATUS_STARTED) {
-				location.hash = '/host/' + $scope.gameId + '/game';
+				location.hash = '/host/' + $scope.gameCode + '/game';
 			} else {
 				$scope.$on(EVENT_MESSAGE, function (ev, data) {
 					if (data.type === 'gameStart') {
-						location.hash = '/play/' + $scope.gameId + '/game';
+						location.hash = '/play/' + $scope.gameCode + '/game';
 					}
 				});
 			}
@@ -131,11 +131,11 @@ app.controller('PlayerGameCtrl', function ($routeParams, $scope, $http, socket) 
 			return;
 		}
 	}
-	$scope.gameId = $routeParams.gameId;
+	$scope.gameCode = $routeParams.gameCode;
 	$scope.things = [];
 	
 	var reqData = {
-		game_id: $scope.gameId,
+		game_code: $scope.gameCode,
 		from: localStorage.userId
 	};
 	$scope.getThings = function () {

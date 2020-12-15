@@ -37,7 +37,7 @@ app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, socket) {
 			return;
 		}
 	}
-	$scope.gameId = $routeParams.gameId;
+	$scope.gameCode = $routeParams.gameCode;
 	// Disable the button until players join.
 	$scope.disabled = true;
 	$scope.buttonMessage = 'Start Game';
@@ -52,7 +52,7 @@ app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, socket) {
 	});
 	$scope.startGame = function () {
 		var reqData = {
-			game_id: $scope.gameId,
+			game_code: $scope.gameCode,
 			from: localStorage.userId
 		};
 		// Disable until a response is received.
@@ -66,11 +66,11 @@ app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, socket) {
 			// On success, wait for players, and then go to the game screen.
 			$scope.buttonMessage = 'Waiting for players';
 			if (res.data.game.status === Game.STATUS_STARTED) {
-				location.hash = '/host/' + $scope.gameId + '/game';
+				location.hash = '/host/' + $scope.gameCode + '/game';
 			} else {
 				$scope.$on(EVENT_MESSAGE, function (ev, data) {
 					if (data.type = 'gameStart') {
-						location.hash = '/host/' + $scope.gameId + '/game';
+						location.hash = '/host/' + $scope.gameCode + '/game';
 					}
 				});
 			}
@@ -94,7 +94,7 @@ app.controller('HostGameCtrl', function ($routeParams, $scope, $http, socket) {
 		}
 	}
 	$scope.disabled = true;
-	$scope.gameId = $routeParams.gameId;
+	$scope.gameCode = $routeParams.gameCode;
 	$scope.shownThings = [];
 	$scope.allThings = [];
 	
@@ -106,7 +106,7 @@ app.controller('HostGameCtrl', function ($routeParams, $scope, $http, socket) {
 	};
 	
 	var reqData = {
-		game_id: $scope.gameId,
+		game_code: $scope.gameCode,
 		from: localStorage.userId
 	};
 	$scope.getThings = function () {
