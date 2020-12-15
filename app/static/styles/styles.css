@@ -8,7 +8,7 @@ body {
 
 
 button,
-*[role="button"] {
+[role="button"] {
 	padding: 16px 32px;
 	min-width: 128px;
 	max-width: 100%;
@@ -113,6 +113,16 @@ section.card {
 			width: 95%;
 		}
 }
+
+.homeButton {
+	text-align: left;
+	padding: 16px 48px;
+	min-width: 6em;
+}
+	.homeButton > img {
+		height: 1.5em;
+		margin: -0.4em 0;
+	}
 
 .closeButtonToolbar {
 	float: right;
