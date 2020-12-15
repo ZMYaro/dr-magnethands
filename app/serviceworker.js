@@ -49,7 +49,6 @@ this.addEventListener('fetch', function (event) {
 		caches.match(event.request).then(function (response) {
 			if (response) {
 				// If cached, serve from cache.
-				console.log('Serving cached file: ' + response.url);
 				return response;
 			}
 			return fetch(event.request).then(function (response) {
