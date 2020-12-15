@@ -7,7 +7,7 @@ const bodyParser = require('body-parser'),
 	Thing = require('./models.js').Thing;
 
 const GAME_ID_LENGTH = 4,
-	GAME_ID_CHARS = 'abcdefghjklmnpqrstuvwxyz123456789'.split('');
+	GAME_ID_CHARS = 'abcdefghjkmnpqrstuvwxyz123456789'.split('');
 
 /**
  * Pick a random element from an array.
