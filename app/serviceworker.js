@@ -8,11 +8,10 @@ this.addEventListener('install', function (event) {
 			cache.addAll([
 				'/static/images/header_bg.png',
 				'/static/images/icon_about.svg',
-				'/static/images/icon_back.png',
-				'/static/images/icon_close.png',
+				'/static/images/icon_back.svg',
+				'/static/images/icon_close.svg',
 				'/static/images/icon_join.svg',
 				'/static/images/icon_new.svg',
-				'/static/images/header_bg.png',
 				'/static/images/silhouette.png',
 				'/static/images/title.png'
 			]);
