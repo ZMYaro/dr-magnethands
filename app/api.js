@@ -160,6 +160,7 @@ router.all((req, res, next) => {
 });
 
 router.route('/game/create')
+	/** Handle a client request to create a new game. */
 	.post(async function (req, res) {
 		// Create a new game.
 		var game = await createGame();
@@ -185,6 +186,7 @@ router.route('/game/create')
 	});
 
 router.route('/game/start')
+	/** Handle a host request to cut off joining, and start the game if all players are ready. */
 	.post(async function (req, res) {
 		var gameId = req.body['game_id'],
 			userId = req.body['from'];
@@ -228,6 +230,7 @@ router.route('/game/start')
 	});
 
 router.route('/player/join')
+	/** Handle a client request for a player to join a game. */
 	.post(async function (req, res) {
 		var gameId = req.body['game_id'],
 			userId = req.body['from'];
@@ -276,6 +279,7 @@ router.route('/player/join')
 	});
 
 router.route('/player/leave')
+	/** Handle a client request for a player to leave a game. */
 	.post(async function (req, res) {
 		var gameId = req.body['game_id'],
 			userId = req.body['from'];
@@ -320,6 +324,7 @@ router.route('/player/leave')
 	});
 	
 router.route('/things')
+	/** Handle a client sending a player's things for a game. */
 	.get(async function (req, res) {
 		var gameId = req.query['game_id'],
 			userId = req.query['from'];
@@ -356,6 +361,7 @@ router.route('/things')
 			things: things.map((thing) => thing.text)
 		});
 	})
+	/** Handle a client requesting a player's things for a game. */
 	.post(async function (req, res) {
 		var gameId = req.body['game_id'],
 			userId = req.body['from'];
