@@ -8,10 +8,10 @@
 			Each of these is an aspect of your character: identity, alter-ego, attribute, tool, ally, enemy, or something else.  Use them to beat challenges as you play&mdash;but when you run out, you die!
 		</p>
 	</section>
-	<section class="card z2" style="text-align: center;" data-ng-repeat="thing in things track by $index">
+	<section class="card" data-ng-class="{z2: !thing.used, z1: thing.used, used: thing.used}" style="text-align: center;" data-ng-repeat="thing in things track by $index">
 		<div role="toolbar" class="closeButtonToolbar">
 			<button data-ng-click="thing.used = true" data-ng-disabled="thing.used" style="width: 60px; height: 56px;">&times;</button>
 		</div>
-		<h1 data-ng-class="{struck: thing.used}">{{ thing.text }}</h1>
+		<h1>{{ thing.text }}</h1>
 	</section>
 </div>

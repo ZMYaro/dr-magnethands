@@ -14,10 +14,6 @@ button,
 	max-width: 100%;
 }
 
-.struck {
-	text-decoration: line-through;
-}
-
 .appBar {
 	background-color: #5492bb;
 	white-space: nowrap;
@@ -67,6 +63,11 @@ section,
 section.card {
 	margin: 8px auto;
 	max-width: 600px;
+	-webkit-transition-property: opacity, -webkit-box-shadow, box-shadow;
+	   -moz-transition-property: opacity, -moz-box-shadow, box-shadow;
+	    -ms-transition-property: opacity, box-shadow;
+	     -o-transition-property: opacity, box-shadow;
+	        transition-property: opacity, box-shadow;
 }
 
 .view:not(.noAppBar) {
@@ -119,3 +120,13 @@ section.card {
 	margin-right: -16px;
 	margin-left: -16px;
 }
+
+.used.card {
+	opacity: 0.6;
+}
+	.used h1 {
+		text-decoration: line-through;
+	}
+	.used .closeButtonToolbar {
+		visibility: hidden;
+	}
