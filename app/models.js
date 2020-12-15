@@ -19,6 +19,6 @@ const thingSchema = new Schema({
 
 exports.Game = mongoose.model('Game', gameSchema);
 exports.Game.STATUS_OPEN = 0;
-exports.Game.STATUS_CUT_OFF = 0;
-exports.Game.STATUS_STARTED = 0;
+exports.Game.STATUS_CUT_OFF = 1;
+exports.Game.STATUS_STARTED = 2;
 exports.Thing = mongoose.model('Thing', thingSchema);

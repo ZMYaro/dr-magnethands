@@ -39,13 +39,12 @@ app.controller('PlayerJoinCtrl', function ($scope, $http, $location) {
 		});
 	};
 });
-app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, channel) {
-	// Check that the channel exists.  Create it if a token exists from
+app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, socket) {
+	// Check that the socket exists.  Create it if a token exists from
 	// which to create it.  Otherwise, redirect to the title screen.
-	if (!channel.isOpen) {
+	if (!socket.isOpen) {
 		if (localStorage.userToken) {
-			channel.close();
-			channel.open();
+			socket.open();
 		} else {
 			$location.path('/home');
 			return;
@@ -99,7 +98,7 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, channel
 		
 		$http({
 			method: 'POST',
-			url: '/api/stuff',
+			url: '/api/things',
 			data: reqData
 		}).then(function (res) {
 			// On success, start waiting, and then go to the game itself.
@@ -121,13 +120,12 @@ app.controller('PlayerLobbyCtrl', function ($scope, $routeParams, $http, channel
 		});
 	};
 });
-app.controller('PlayerGameCtrl', function ($routeParams, $scope, $http, channel) {
-	// Check that the channel exists.  Create it if a token exists from
+app.controller('PlayerGameCtrl', function ($routeParams, $scope, $http, socket) {
+	// Check that the socket exists.  Create it if a token exists from
 	// which to create it.  Otherwise, redirect to the title screen.
-	if (!channel.isOpen) {
+	if (!socket.isOpen) {
 		if (localStorage.userToken) {
-			channel.close();
-			channel.open();
+			socket.open();
 		} else {
 			location.hash = '/home';
 			return;
@@ -143,7 +141,7 @@ app.controller('PlayerGameCtrl', function ($routeParams, $scope, $http, channel)
 	$scope.getThings = function () {
 		$http({
 			method: 'GET',
-			url: '/api/stuff',
+			url: '/api/things',
 			params: reqData,
 		}).then(function (res) {
 			// On success, check that the things were retrieved.

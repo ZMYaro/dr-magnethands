@@ -1,7 +1,7 @@
 'use strict';
 
 // Host controllers
-app.controller('HostCreateCtrl', function ($scope, $http, channel) {
+app.controller('HostCreateCtrl', function ($scope, $http, socket) {
 	var reqData = {}
 	if (localStorage.userId) {
 		reqData.from = localStorage.userId
@@ -15,11 +15,10 @@ app.controller('HostCreateCtrl', function ($scope, $http, channel) {
 		localStorage.userId = res.data.user.id;
 		localStorage.userToken = res.data.user.token;
 		
-		// Create the game channel.
-		channel.close();
-		channel.open(function () {
+		// Create the game socket.
+		socket.open(function () {
 			// When the socket is open, redirect to the game lobby.
-			location.hash = '/host/' + res.data.game.id + '/lobby';
+			location.hash = '/host/' + res.data.game.code + '/lobby';
 		});
 	}, function (res) {
 		// On error, go back home.
@@ -27,13 +26,12 @@ app.controller('HostCreateCtrl', function ($scope, $http, channel) {
 		location.hash = '/home';
 	});
 });
-app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, channel) {
-	// Check that the channel exists.  Create it if a token exists from
+app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, socket) {
+	// Check that the socket exists.  Create it if a token exists from
 	// which to create it.  Otherwise, redirect to the title screen.
-	if (!channel.isOpen) {
+	if (!socket.isOpen) {
 		if (localStorage.userToken) {
-			channel.close();
-			channel.open();
+			socket.open();
 		} else {
 			location.hash = '/home';
 			return;
@@ -84,13 +82,12 @@ app.controller('HostLobbyCtrl', function ($routeParams, $scope, $http, channel) 
 		});
 	};
 });
-app.controller('HostGameCtrl', function ($routeParams, $scope, $http, channel) {
-	// Check that the channel exists.  Create it if a token exists from
+app.controller('HostGameCtrl', function ($routeParams, $scope, $http, socket) {
+	// Check that the socket exists.  Create it if a token exists from
 	// which to create it.  Otherwise, redirect to the title screen.
-	if (!channel.isOpen) {
+	if (!socket.isOpen) {
 		if (localStorage.userToken) {
-			channel.close();
-			channel.open();
+			socket.open();
 		} else {
 			location.hash = '/home';
 			return;
@@ -115,7 +112,7 @@ app.controller('HostGameCtrl', function ($routeParams, $scope, $http, channel) {
 	$scope.getThings = function () {
 		$http({
 			method: 'GET',
-			url: '/api/stuff',
+			url: '/api/things',
 			params: reqData,
 		}).then(function (res) {
 			// On success, check that the things were retrieved.

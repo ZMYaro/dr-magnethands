@@ -21,45 +21,42 @@ var PARTIALS_DIR = '/static/partials/',
 		}];
 	});
 
-app.factory('channel', function ($rootScope) {
+app.factory('socket', function ($rootScope) {
 	return {
 		open: function (callback) {
-			$rootScope.channel = new goog.appengine.Channel(localStorage.userToken);
-			var handlers = {
-				onopen: function () {
-					if (typeof callback === 'function') {
-						callback();
-					}
-				},
-				onerror: function (err) {
-					alert('Error ' + err.code + ': ' + err.description);
-					$rootScope.socket = undefined;
-					$rootScope.channel = undefined;
-					location.hash = '/home';
-				},
-				onclose: function () {
-					alert('The game has ended.');
-					$rootScope.socket = undefined;
-					$rootScope.channel = undefined;
-					location.hash = '/home';
-				},
-				onmessage: function (msg) {
-					var data = JSON.parse(msg.data);
-					console.log('Socket message received: ' + msg.data);
-					$rootScope.$broadcast(EVENT_MESSAGE, data);
+			if (this.isOpen) {
+				this.close();
+			}
+			$rootScope.socket = io();
+			$rootScope.socket.emit('join', {token: localStorage.userToken});
+			$rootScope.socket.on('connect', function () {
+				if (typeof callback === 'function') {
+					callback();
 				}
-			};
-			$rootScope.socket = $rootScope.channel.open(handlers);
-		},
-		close: function () {
-			if ($rootScope.channel) {
-				$rootScope.socket.onclose = function () {};
-				if ($rootScope.socket && typeof $rootScope.socket.close === 'function') {
-					$rootScope.socket.close();
+			});
+			$rootScope.socket.on('connect_error', function (err) {
+				alert('An error occurred: ' + JSON.stringify(err));
+				$rootScope.socket = undefined;
+				location.hash = '/home';
+			});
+			$rootScope.socket.on('disconnect', function (reason) {
+				if (reason !== 'io client disconnect') {
+					alert('You have disconnected from the game.');
 				}
 				$rootScope.socket = undefined;
-				$rootScope.channel = undefined;
+				location.hash = '/home';
+			});
+			$rootScope.socket.on('message', function (data) {
+				console.log('Socket message received: ', data);
+				$rootScope.$broadcast(EVENT_MESSAGE, data);
+			});
+		},
+		close: function () {
+			if (!this.isOpen) {
+				return;
 			}
+			$rootScope.socket.close();
+			$rootScope.socket = undefined;
 		},
 		get isOpen() {
 			return !!$rootScope.socket;
@@ -67,8 +64,8 @@ app.factory('channel', function ($rootScope) {
 	};
 });
 
-app.controller('MainMenuCtrl', function ($scope, channel) {
-	channel.close();
+app.controller('MainMenuCtrl', function ($scope, socket) {
+	socket.close();
 });
 
 app.config(['$routeProvider', function($routeProvider) {
