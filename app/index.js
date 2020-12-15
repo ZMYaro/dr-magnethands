@@ -46,6 +46,6 @@ db.once('open', function () {
 // Set up routes.
 // Serve the service worker from root level `/`.
 app.use('/serviceworker.js', (req, res) => res.sendFile(path.join(__dirname, '/serviceworker.js')));
-app.use('/static', express.static('static'));
+app.use(express.static('static'));
 app.use('/api', apiRouter);
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/index.html')));

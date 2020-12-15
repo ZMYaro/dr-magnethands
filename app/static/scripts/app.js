@@ -1,6 +1,6 @@
 'use strict';
 
-var PARTIALS_DIR = '/static/partials/',
+var PARTIALS_DIR = '/partials/',
 	EVENT_MESSAGE = 'message',
 	Game = {
 		STATUS_OPEN: 0,

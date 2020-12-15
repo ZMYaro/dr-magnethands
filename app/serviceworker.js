@@ -1,32 +1,32 @@
 'use strict';
 
-const CACHE_VERSION = '2020-12-15, v1';
+const CACHE_VERSION = '2020-12-15, v2';
 
 this.addEventListener('install', function (event) {
 	event.waitUntil(
 		caches.open(CACHE_VERSION).then(function (cache) {
 			cache.addAll([
-				'/static/images/header_bg.png',
-				'/static/images/icon_about.svg',
-				'/static/images/icon_back.svg',
-				'/static/images/icon_close.svg',
-				'/static/images/icon_join.svg',
-				'/static/images/icon_new.svg',
-				'/static/images/silhouette.png',
-				'/static/images/title.png'
+				'/images/header_bg.png',
+				'/images/icon_about.svg',
+				'/images/icon_back.svg',
+				'/images/icon_close.svg',
+				'/images/icon_join.svg',
+				'/images/icon_new.svg',
+				'/images/silhouette.png',
+				'/images/title.png'
 			]);
 			
 			return cache.addAll([
-				'/static/manifest.webmanifest',
-				'/static/offline.html',
-				'/static/images/favicon.ico',
-				'/static/images/icon.png',
-				'/static/images/offline.png',
-				'/static/scripts/libs/material-touch.js',
-				'/static/styles/libs/material-elements.css',
-				'/static/styles/libs/material-depth.css',
-				'/static/styles/libs/material-widgets.css',
-				'/static/styles/styles.css'
+				'/manifest.webmanifest',
+				'/offline.html',
+				'/images/favicon.ico',
+				'/images/icon.png',
+				'/images/offline.png',
+				'/scripts/libs/material-touch.js',
+				'/styles/libs/material-elements.css',
+				'/styles/libs/material-depth.css',
+				'/styles/libs/material-widgets.css',
+				'/styles/styles.css'
 			]);
 		})
 	);
@@ -56,7 +56,7 @@ this.addEventListener('fetch', function (event) {
 				return response;
 			}).catch(function (error) {
 				// If unable to load, return the offline page.
-				return caches.match('/static/offline.html');
+				return caches.match('/offline.html');
 			})
 		})
 	);
