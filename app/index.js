@@ -35,10 +35,12 @@ app.io.on('connection', (socket) => {
 mongoose.connect(MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', (err) => {
+	console.error(`Error connecting to database \u201c${MONGODB_URI}\u201d:`);
 	console.error(err);
 	process.exit(1);
 });
 db.once('open', function () {
+	console.log(`Connected to database \u201c${MONGODB_URI}\u201d.`);
 	// Start server once DB ready.
 	server.listen(PORT, () => {
 		console.log(`Listening on port ${PORT}...`);
