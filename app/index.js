@@ -14,6 +14,11 @@ const PORT = process.env.PORT || 8080,
 const app = express(),
 	server = http.createServer(app);
 app.set('port', PORT);
+// Serve the service worker from root level `/`.
+app.use('/serviceworker.js', (req, res) => res.sendFile(path.join(__dirname, '/serviceworker.js')));
+app.use(express.static('static'));
+app.use('/api', apiRouter);
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/index.html')));
 
 // Set up Socket.IO.
 app.io = socketio(server);
@@ -42,9 +47,3 @@ db.once('open', function () {
 	});
 });
 
-// Set up routes.
-// Serve the service worker from root level `/`.
-app.use('/serviceworker.js', (req, res) => res.sendFile(path.join(__dirname, '/serviceworker.js')));
-app.use(express.static('static'));
-app.use('/api', apiRouter);
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/index.html')));
