@@ -8,8 +8,7 @@ const express = require('express'),
 	apiRouter = require('./api.js');
 
 const PORT = process.env.PORT || 8080,
-	DB_NAME = 'magnethands',
-	MONGODB_URI = process.env.MONGDB_URI || `mongodb://localhost:27017/${DB_NAME}`;
+	MONGODB_URI = process.env.MONGDB_URI || `mongodb://localhost:27017/magnethands`;
 
 // Set up Express.
 const app = express(),
