@@ -6,7 +6,7 @@ this.addEventListener('install', function (event) {
 	event.waitUntil(
 		caches.open(CACHE_VERSION).then(function (cache) {
 			cache.addAll([
-				'/images/header_bg.png',
+				'/images/header_bg.svg',
 				'/images/icon_about.svg',
 				'/images/icon_back.svg',
 				'/images/icon_close.svg',
