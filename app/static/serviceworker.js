@@ -1,12 +1,13 @@
 'use strict';
 
-const CACHE_VERSION = '2020-12-15, v2';
+const CACHE_VERSION = '2020-12-17, v1';
 
 this.addEventListener('install', function (event) {
 	event.waitUntil(
 		caches.open(CACHE_VERSION).then(function (cache) {
 			cache.addAll([
 				'/images/header_bg.svg',
+				'/images/header_bg_dark.svg',
 				'/images/icon_about.svg',
 				'/images/icon_back.svg',
 				'/images/icon_close.svg',

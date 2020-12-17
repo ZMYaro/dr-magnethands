@@ -35,13 +35,18 @@ progress.circular {
 	background-image: url('/images/header_bg.svg');
 	background-position: center;
 	background-size: cover;
-	
-	-webkit-box-shadow: inset 0 -96px 48px -48px #89c1e2;
-	   -moz-box-shadow: inset 0 -96px 48px -48px #89c1e2;
-	        box-shadow: inset 0 -96px 48px -48px #89c1e2;
+	color: #89c1e2;
+	-webkit-box-shadow: inset 0 -96px 48px -48px;
+	   -moz-box-shadow: inset 0 -96px 48px -48px;
+	        box-shadow: inset 0 -96px 48px -48px;
 	
 	padding: 16px;
 	margin-bottom: -32px;
+}
+.title,
+.silhouette {
+	width: 100%;
+	max-width: 600px;
 }
 @media (max-height: 600px) {
 	.bgFill {
@@ -128,6 +133,7 @@ section.card {
 		width: 1.5rem;
 		height: 1.5rem;
 		margin: -0.4rem 0.1rem;
+		fill: currentColor;
 	}
 
 .closeButtonToolbar {
@@ -146,3 +152,38 @@ section.card {
 	.used .closeButtonToolbar {
 		visibility: hidden;
 	}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #284e66;
+		color: #c8c8c9;
+	}
+	button.z1,
+	[role="button"].z1,
+	.card {
+		background-color: #202124;
+	}
+		button.z1:enabled:hover,
+		button.z1:enabled:focus,
+		[role="button"].z1:not(:disabled):hover,
+		[role="button"].z1:not(:disabled):focus {
+			background-color: #303134;
+		}
+		button.z1:enabled:active,
+		button.z1:enabled.active,
+		[role="button"].z1:not(:disabled):active,
+		[role="button"].z1:not(:disabled).active {
+			background-color: #3d3e40;
+		}
+	.appBar {
+		background-color: #16344c;
+	}
+	.bgFill {
+		background-image: url('/images/header_bg_dark.svg');
+		color: #284e66;
+	}
+	.title {
+		-webkit-filter: brightness(0.8);
+		        filter: brightness(0.8);
+	}
+}
