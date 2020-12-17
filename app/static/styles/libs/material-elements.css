@@ -1,7 +1,7 @@
 /* Base Material styles for elements
  * Part of the MaterialZ CSS library
  *
- * Copyright 2015 Zachary Yaro
+ * Copyright 2015-2020 Zachary Yaro
  * Released under the MIT license
  * http://materialz.zmyaro.com/LICENSE.txt
  */
@@ -25,6 +25,14 @@ body {
 	background-color: #fafafa;
 }
 
+/* --------======== BORDERS ========--------*/
+hr {
+	border-width: 1px 0 0;
+}
+fieldset {
+	border-width: 1px;
+}
+
 /* --------======== MONOSPACE ELEMENTS ========--------*/
 code,
 kbd,
@@ -32,6 +40,15 @@ pre,
 samp,
 tt {
 	font-family: "Roboto Mono", "Droid Sans Mono", monospace;
+}
+
+kbd {
+	display: inline-block;
+	padding: 2px 8px;
+	margin: -2px 2px;
+	border-radius: 2px;
+	background-color: rgba(128, 128, 128, 0.25);
+	font: inherit; /* Override the default behavior of <kbd> having a monospace font. */
 }
 
 /* --------======== HEADINGS and TYPOGRAPHY ========-------- */
@@ -82,18 +99,17 @@ input[type="reset"],
 input[type="checkbox"],
 input[type="radio"],
 input[type="range"],
-select:not([size]),
-select[size="1"] {
+select {
 	cursor: pointer;
 }
 
 /* --------======== BUTTONS and DROP-DOWNS ========-------- */
-button, [role="button"],
+button,
+[role="button"],
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
-select:not([size]),
-select[size="1"] {
+select {
 	display: inline-block;
 	margin: 4px;
 	padding: 8px 16px;
@@ -102,6 +118,9 @@ select[size="1"] {
 	-webkit-border-radius: 3px;
 	   -moz-border-radius: 3px;
 	        border-radius: 3px;
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
 }
 	button,
 	[role="button"],
@@ -109,10 +128,12 @@ select[size="1"] {
 	input[type="submit"],
 	input[type="reset"] {
 		text-transform: uppercase;
+		font-size: 87.5%;
+		font-size: 0.875rem;
 		font-weight: 500; /* Medium */
+		padding: 10px 16px 9px;
 	}
-	select:not([size]),
-	select[size="1"] {
+	select {
 		min-width: 0;
 		position: relative;
 		background-color: transparent;
@@ -127,37 +148,33 @@ select[size="1"] {
 		text-overflow: '';
 	}
 	button:not(:disabled):hover,
-	[role="button"]:not(:disabled):hover,
-	input[type="button"]:not(:disabled):hover,
-	input[type="submit"]:not(:disabled):hover,
-	input[type="reset"]:not(:disabled):hover,
-	select:not(:disabled):hover,
-	select[size="1"]:not(:disabled):hover,
 	button:focus,
+	[role="button"]:not(:disabled):hover,
 	[role="button"]:focus,
+	input[type="button"]:not(:disabled):hover,
 	input[type="button"]:focus,
+	input[type="submit"]:not(:disabled):hover,
 	input[type="submit"]:focus,
+	input[type="reset"]:not(:disabled):hover,
 	input[type="reset"]:focus,
-	select:not([size]):focus,
-	select[size="1"]:focus {
+	select:not(:disabled):hover,
+	select:focus {
 		background-color: #e2e3e3;
 		background-color: rgba(128, 128, 128, 0.2);
 	}
 	/* The “active” class is used to force the appearance of the active/pressed state */
 	button:not(:disabled):active,
-	[role="button"]:not(:disabled):active,
-	input[type="button"]:not(:disabled):active,
-	input[type="submit"]:not(:disabled):active,
-	input[type="reset"]:not(:disabled):active,
-	select:not([size]):not(:disabled):active,
-	select[size="1"]:not(:disabled):active,
 	button:not(:disabled).active,
+	[role="button"]:not(:disabled):active,
 	[role="button"]:not(:disabled).active,
+	input[type="button"]:not(:disabled):active,
 	input[type="button"]:not(:disabled).active,
+	input[type="submit"]:not(:disabled):active,
 	input[type="submit"]:not(:disabled).active,
+	input[type="reset"]:not(:disabled):active,
 	input[type="reset"]:not(:disabled).active,
-	select:not([size]):not(:disabled).active,
-	select[size="1"]:not(:disabled).active {
+	select:not(:disabled):active,
+	select:not(:disabled).active {
 		background-color: #c4c5c5;
 		background-color: rgba(128, 128, 128, 0.4);
 	}
@@ -184,21 +201,21 @@ input[type="checkbox"] {
 	background-color: transparent;
 	background-repeat: no-repeat;
 	
-	-webkit-transition-duration: 0.125s;
-	   -moz-transition-duration: 0.125s;
-	    -ms-transition-duration: 0.125s;
-	     -o-transition-duration: 0.125s;
-	        transition-duration: 0.125s;
+	-webkit-transition-duration: 0.13s;
+	   -moz-transition-duration: 0.13s;
+	    -ms-transition-duration: 0.13s;
+	     -o-transition-duration: 0.13s;
+	        transition-duration: 0.13s;
 	-webkit-transition-timing-function: linear;
 	   -moz-transition-timing-function: linear;
 	    -ms-transition-timing-function: linear;
 	     -o-transition-timing-function: linear;
 	        transition-timing-function: linear;
-	-webkit-transition-property: border-color, -webkit-box-shadow, box-shadow;
-	   -moz-transition-property: border-color, -moz-box-shadow, box-shadow;
-	    -ms-transition-property: border-color, box-shadow;
-	     -o-transition-property: border-color, box-shadow;
-	        transition-property: border-color, box-shadow;
+	-webkit-transition-property: border-color, color, -webkit-box-shadow, box-shadow;
+	   -moz-transition-property: border-color, color,    -moz-box-shadow, box-shadow;
+	    -ms-transition-property: border-color, color,                     box-shadow;
+	     -o-transition-property: border-color, color,                     box-shadow;
+	        transition-property: border-color, color,                     box-shadow;
 }
 	input[type="radio"]::-ms-check,
 	input[type="checkbox"]::-ms-check {
@@ -231,28 +248,27 @@ input[type="radio"] {
 		
 		background-color: transparent;
 		
-		-webkit-transition-delay: 0.07s, 0.07s, 0, 0;
-		   -moz-transition-delay: 0.07s, 0.07s, 0, 0;
-		    -ms-transition-delay: 0.07s, 0, 0;
-			 -o-transition-delay: 0.07s, 0, 0;
-			    transition-delay: 0.07s, 0;
-		-webkit-transition-duration: 0.13s, 0.13s 0.07s, 0.07s;
-		   -moz-transition-duration: 0.13s, 0.13s 0.07s, 0.07s;
-		    -ms-transition-duration: 0.13s, 0.07s, 0.07s;
-		     -o-transition-duration: 0.13s, 0.07s, 0.07s;
-		        transition-duration: 0.13s, 0.07s;
+		-webkit-transition-delay: 0s, 0s, 0.07s, 0.07s;
+		   -moz-transition-delay: 0s, 0s, 0.07s, 0.07s;
+		    -ms-transition-delay:     0s, 0.07s, 0.07s;
+			 -o-transition-delay:     0s, 0.07s, 0.07s;
+			    transition-delay:     0s,        0.07s;
+		-webkit-transition-duration: 0.13s, 0.13s, 0.07s, 0.07s;
+		   -moz-transition-duration: 0.13s, 0.13s, 0.07s, 0.07s;
+		    -ms-transition-duration:        0.13s, 0.07s, 0.07s;
+		     -o-transition-duration:        0.13s, 0.07s, 0.07s;
+		        transition-duration:        0.13s,        0.07s;
 		-webkit-transition-timing-function: linear;
 		   -moz-transition-timing-function: linear;
 		    -ms-transition-timing-function: linear;
 		     -o-transition-timing-function: linear;
 		        transition-timing-function: linear;
 		-webkit-transition-property: -webkit-box-shadow, box-shadow, -webkit-transform, transform;
-		   -moz-transition-property: -moz-box-shadow, box-shadow, -moz-transform, transform;
-		    -ms-transition-property: box-shadow, -ms-transform, transform;
-		     -o-transition-property: box-shadow, -o-transform, transform;
-		        transition-property: box-shadow, transform, background-color;
+		   -moz-transition-property:    -moz-box-shadow, box-shadow,    -moz-transform, transform;
+		    -ms-transition-property:                     box-shadow,     -ms-transform, transform;
+		     -o-transition-property:                     box-shadow,      -o-transform, transform;
+		        transition-property:                     box-shadow,                    transform;
 		
-		color: black;
 		-webkit-box-shadow: inset 0 0 0 0;
 		   -moz-box-shadow: inset 0 0 0 0;
 		        box-shadow: inset 0 0 0 0;
@@ -270,7 +286,7 @@ input[type="radio"] {
 			     -o-transition-delay: 0, 0.13s, 0.13s;
 			        transition-delay: 0, 0.13s;
 			
-			color: #40c4ff;
+			color: inherit;
 			-webkit-box-shadow: inset 0 0 0 10px;
 			   -moz-box-shadow: inset 0 0 0 10px;
 			        box-shadow: inset 0 0 0 10px;
@@ -484,7 +500,8 @@ input[type="password"],
 input[type="email"],
 input[type="url"],
 input[type="number"],
-textarea {
+textarea,
+select[size] {
 	-webkit-appearance: none;
 	   -moz-appearance: none;
 	        appearance: none;
@@ -501,10 +518,29 @@ textarea {
 	        border-radius: 0;
 	outline: 0 none transparent;
 }
-textarea {
+textarea,
+select[size] {
 	border-width: 1px;
+	border-style: solid;
+}
+select[size] {
+	padding: 0;
+}
+textarea,
+select[size] > option {
 	padding: 4px;
 }
+	input[type="text"]:focus,
+	input[type="search"]:focus,
+	input[type="password"]:focus,
+	input[type="email"]:focus,
+	input[type="url"]:focus,
+	input[type="number"]:focus,
+	textarea:focus,
+	select[size]:focus {
+		border-color: #40c4ff;
+		outline: 0 none transparent;
+	}
 	input[type="text"]:focus,
 	input[type="search"]:focus,
 	input[type="password"]:focus,
@@ -514,8 +550,6 @@ textarea {
 	textarea:focus {
 		padding-bottom: 3px;
 		border-bottom-width: 2px;
-		border-color: #40c4ff;
-		outline: 0 none transparent;
 	}
 
 *:disabled,

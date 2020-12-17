@@ -22,7 +22,11 @@ this.addEventListener('install', function (event) {
 				'/partials/host_lobby.html',
 				'/partials/player_game.html',
 				'/partials/player_join.html',
-				'/partials/player_lobby.html'
+				'/partials/player_lobby.html',
+				'/styles/libs/material-depth.css',
+				'/styles/libs/material-elements.css',
+				'/styles/libs/material-widgets.css',
+				'/styles/styles.css'
 			]);
 			
 			return cache.addAll([

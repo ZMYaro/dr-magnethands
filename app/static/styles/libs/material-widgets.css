@@ -1,7 +1,7 @@
 /* Base Material styles for widgets
  * Part of the MaterialZ CSS library
  *
- * Copyright 2015 Zachary Yaro
+ * Copyright 2015-2020 Zachary Yaro
  * Released under the MIT license
  * http://materialz.zmyaro.com/LICENSE.txt
  */
@@ -44,7 +44,8 @@ body {
 		vertical-align: top;
 		min-width: 0;
 		margin: -8px 0; /* Counter the toolbar's padding */
-		padding: 8px 6px;
+		padding: 12px 10px 11px;
+		font-size: 14px; /* According to Android, toolbar buttons do not scale with base font like other elements do. */
 		
 		background-color: transparent;
 		background-image: none;
@@ -55,30 +56,6 @@ body {
 		   -moz-border-radius: 24px;
 				border-radius: 24px;
 	}
-		[role="toolbar"] button:hover,
-		[role="toolbar"] button:focus,
-		[role="toolbar"] [role="button"]:hover,
-		[role="toolbar"] [role="button"]:focus,
-		[role="toolbar"] input[type="button"]:hover,
-		[role="toolbar"] input[type="button"]:focus,
-		[role="toolbar"] input[type="submit"]:hover,
-		[role="toolbar"] input[type="submit"]:focus,
-		[role="toolbar"] input[type="reset"]:hover,
-		[role="toolbar"] input[type="reset"]:focus {
-			background-color: rgba(0,0,0,0.07);
-		}
-		[role="toolbar"] button:enabled:active,
-		[role="toolbar"] button:enabled.active,
-		[role="toolbar"] [role="button"]:active,
-		[role="toolbar"] [role="button"].active,
-		[role="toolbar"] input[type="button"]:active,
-		[role="toolbar"] input[type="button"].active,
-		[role="toolbar"] input[type="submit"]:active,
-		[role="toolbar"] input[type="submit"].active,
-		[role="toolbar"] input[type="reset"]:active,
-		[role="toolbar"] input[type="reset"].active {
-			background-color: rgba(0,0,0,0.13);
-		}
 		[role="toolbar"] button img,
 		[role="toolbar"] button [role="img"],
 		[role="toolbar"] [role="button"] img,
@@ -89,8 +66,9 @@ body {
 		[role="toolbar"] input[type="submit"] [role="img"],
 		[role="toolbar"] input[type="reset"] img,
 		[role="toolbar"] input[type="reset"] [role="img"] {
+			width: 24px;
 			height: 24px;
-			margin: -5px 2px;
+			margin: -4px -2px -7px;
 			pointer-events: none;
 		}
 
@@ -103,7 +81,6 @@ body {
 	top: 0px;
 	left: 0px;
 	right: 0px;
-	height: 64px;
 	
 	padding: 20px 16px;
 	font-size: 20px;
@@ -132,48 +109,48 @@ body {
 	.appBar > [role="toolbar"] {
 		margin: -20px -16px;
 	}
-		.appBar > [role="toolbar"] button:hover,
+		.appBar > [role="toolbar"] button:not(:disabled):hover,
 		.appBar > [role="toolbar"] button:focus,
 		.appBar > [role="toolbar"] [role="button"]:hover,
 		.appBar > [role="toolbar"] [role="button"]:focus,
-		.appBar > [role="toolbar"] input[type="button"]:hover,
+		.appBar > [role="toolbar"] input[type="button"]:not(:disabled):hover,
 		.appBar > [role="toolbar"] input[type="button"]:focus,
-		.appBar > [role="toolbar"] input[type="submit"]:hover,
+		.appBar > [role="toolbar"] input[type="submit"]:not(:disabled):hover,
 		.appBar > [role="toolbar"] input[type="submit"]:focus,
-		.appBar > [role="toolbar"] input[type="reset"]:hover,
+		.appBar > [role="toolbar"] input[type="reset"]:not(:disabled):hover,
 		.appBar > [role="toolbar"] input[type="reset"]:focus,
-		.appBar[role="toolbar"] button:hover,
+		.appBar[role="toolbar"] button:not(:disabled):hover,
 		.appBar[role="toolbar"] button:focus,
 		.appBar[role="toolbar"] [role="button"]:hover,
 		.appBar[role="toolbar"] [role="button"]:focus,
-		.appBar[role="toolbar"] input[type="button"]:hover,
+		.appBar[role="toolbar"] input[type="button"]:not(:disabled):hover,
 		.appBar[role="toolbar"] input[type="button"]:focus,
-		.appBar[role="toolbar"] input[type="submit"]:hover,
+		.appBar[role="toolbar"] input[type="submit"]:not(:disabled):hover,
 		.appBar[role="toolbar"] input[type="submit"]:focus,
-		.appBar[role="toolbar"] input[type="reset"]:hover,
+		.appBar[role="toolbar"] input[type="reset"]:not(:disabled):hover,
 		.appBar[role="toolbar"] input[type="reset"]:focus {
 			background-color: rgba(255,255,255,0.07);
 		}
-		.appBar > [role="toolbar"] button:enabled:active,
-		.appBar > [role="toolbar"] button:enabled.active,
+		.appBar > [role="toolbar"] button:not(:disabled):active,
+		.appBar > [role="toolbar"] button:not(:disabled).active,
 		.appBar > [role="toolbar"] [role="button"]:active,
 		.appBar > [role="toolbar"] [role="button"].active,
-		.appBar > [role="toolbar"] input[type="button"]:active,
-		.appBar > [role="toolbar"] input[type="button"].active,
-		.appBar > [role="toolbar"] input[type="submit"]:active,
-		.appBar > [role="toolbar"] input[type="submit"].active,
-		.appBar > [role="toolbar"] input[type="reset"]:active,
-		.appBar > [role="toolbar"] input[type="reset"].active,
-		.appBar[role="toolbar"] button:enabled:active,
-		.appBar[role="toolbar"] button:enabled.active,
+		.appBar > [role="toolbar"] input[type="button"]:not(:disabled):active,
+		.appBar > [role="toolbar"] input[type="button"]:not(:disabled).active,
+		.appBar > [role="toolbar"] input[type="submit"]:not(:disabled):active,
+		.appBar > [role="toolbar"] input[type="submit"]:not(:disabled).active,
+		.appBar > [role="toolbar"] input[type="reset"]:not(:disabled):active,
+		.appBar > [role="toolbar"] input[type="reset"]:not(:disabled).active,
+		.appBar[role="toolbar"] button:not(:disabled):active,
+		.appBar[role="toolbar"] button:not(:disabled).active,
 		.appBar[role="toolbar"] [role="button"]:active,
 		.appBar[role="toolbar"] [role="button"].active,
-		.appBar[role="toolbar"] input[type="button"]:active,
-		.appBar[role="toolbar"] input[type="button"].active,
-		.appBar[role="toolbar"] input[type="submit"]:active,
-		.appBar[role="toolbar"] input[type="submit"].active,
-		.appBar[role="toolbar"] input[type="reset"]:active,
-		.appBar[role="toolbar"] input[type="reset"].active {
+		.appBar[role="toolbar"] input[type="button"]:not(:disabled):active,
+		.appBar[role="toolbar"] input[type="button"]:not(:disabled).active,
+		.appBar[role="toolbar"] input[type="submit"]:not(:disabled):active,
+		.appBar[role="toolbar"] input[type="submit"]:not(:disabled).active,
+		.appBar[role="toolbar"] input[type="reset"]:not(:disabled):active,
+		.appBar[role="toolbar"] input[type="reset"]:not(:disabled).active {
 			background-color: rgba(255,255,255,0.13);
 		}
 
@@ -220,36 +197,6 @@ body {
 			   -moz-box-shadow: none;
 			        box-shadow: none;
 		}
-			.list li button:hover,
-			.list li [role="button"]:hover,
-			.list li input[type="button"]:hover,
-			.list li input[type="submit"]:hover,
-			.list li input[type="reset"]:hover,
-			.list li button:focus,
-			.list li [role="button"]:focus,
-			.list li input[type="button"]:focus,
-			.list li input[type="submit"]:focus,
-			.list li input[type="reset"]:focus {
-				background-color: #f2f2f2;
-				background-color: rgba(0, 0, 0, 0.05);
-			}
-			.list li button:enabled:active,
-			.list li button:enabled.active,
-			.list li [role="button"]:active,
-			.list li [role="button"].active,
-			.list li input[type="button"]:enabled:active,
-			.list li input[type="button"]:enabled.active,
-			.list li input[type="submit"]:enabled:active,
-			.list li input[type="submit"]:enabled.active,
-			.list li input[type="reset"]:enabled:active,
-			.list li input[type="reset"]:enabled.active {
-				-webkit-box-shadow: none;
-				   -moz-box-shadow: none;
-				        box-shadow: none;
-				
-				background-color: #e3e3e3;
-				background-color: rgba(0, 0, 0, 0.09);
-			}
 
 .card {
 	background-color: white;
@@ -264,6 +211,8 @@ body {
 	margin: 8px;
 	padding: 16px;
 	vertical-align: top;
+	
+	overflow: hidden;
 }
 
 progress.circular,
@@ -326,6 +275,7 @@ progress.circular::after,
 		right: 0;
 		bottom: 0;
 		margin: -6px; /* Counter the parent element's border width */
+		border-width: inherit;
 		border-top-color: inherit;
 	}
 	progress.circular::before,
@@ -362,7 +312,6 @@ progress.circular::after,
 	}
 	[role="toolbar"],
 	.appBar {
-		height: 56px;
 		padding: 16px;
 	}
 		.appBar > [role="toolbar"] {
