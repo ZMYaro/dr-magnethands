@@ -13,7 +13,16 @@ this.addEventListener('install', function (event) {
 				'/images/icon_join.svg',
 				'/images/icon_new.svg',
 				'/images/silhouette.png',
-				'/images/title.png'
+				'/images/title.png',
+				'/partials/about.html',
+				'/partials/drunk_test.html',
+				'/partials/home.html',
+				'/partials/host_create.html',
+				'/partials/host_game.html',
+				'/partials/host_lobby.html',
+				'/partials/player_game.html',
+				'/partials/player_join.html',
+				'/partials/player_lobby.html'
 			]);
 			
 			return cache.addAll([
