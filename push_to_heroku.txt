@@ -1,3 +1,6 @@
-// From root:
+# To set up:
+heroku git:remote -a dr-magnethands
+ 
+# To push (run from root):
 git subtree push --prefix app heroku master
 
